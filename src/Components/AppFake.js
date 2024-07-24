@@ -1,34 +1,31 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
-import Navigation from "./Components/Navigation";
-import About from "./Components/About";
-import Contact from "./Components/Contact";
-import Home from "./Components/Home";
+import Home from "./Home";
+import Contact from "./Contact";
+import About from "./About";
+import Navigation from "./Navigation";
+import { Route, Routes } from "react-router-dom";
 
-function App() {
-  const [dataEnviada, setDataEnviada] = useState({
-    title: "",
-    body: "",
-    userId: "",
+export default function AppFake() {
+  const [data, setData] = useState({
+    title: "title",
+    body: "body",
+    userId: "userId",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDataEnviada((dataPrevia) => ({
+    setData((dataPrevia) => ({
       ...dataPrevia,
       [name]: value,
     }));
   };
 
-  // console.log(dataEnviada);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", dataEnviada)
+      .post("https://jsonplaceholder.typicode.com/posts", data)
       .then((res) => console.log(res.data))
       .catch((err) => console.error(err));
   };
@@ -43,39 +40,34 @@ function App() {
       </Routes>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Title: </label>
+          <label>Title:</label>
           <input
             type="text"
             name="title"
-            value={dataEnviada.title}
+            value={data.title}
             onChange={handleChange}
-          />
+          ></input>
         </div>
-        <br />
         <div>
-          <label>Body: </label>
+          <label>Body:</label>
           <input
             type="text"
             name="body"
-            value={dataEnviada.body}
+            value={data.body}
             onChange={handleChange}
-          />
+          ></input>
         </div>
-        <br />
         <div>
-          <label>UserId: </label>
+          <label>UserId:</label>
           <input
-            type="number"
+            type="text"
             name="userId"
-            value={dataEnviada.userId}
+            value={data.userId}
             onChange={handleChange}
-          />
+          ></input>
         </div>
-        <br />
         <button type="submit">Enviar</button>
       </form>
     </div>
   );
 }
-
-export default App;
